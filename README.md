@@ -3,11 +3,17 @@
 持久层：persistence  
 表示层：web
 1.	正常创建一个springboot项目
+
 2.	修改创建项目的pom文件，将<packaging>jar</packaging>修改为<packaging>pom</packaging>
+
 3.	选择根项目，New-->Module-->Maven-->Next-->ArtifactId中输入model名，比如web -->Next-->Finish完成模块的创建
+
 4.	将根项目src/java下的包信息以及属性文件，分别移动到新建的web模块中对应的目录下，然后根项目的src目录就变成一个空目录，将其删除，在web下面，启动运行项目，项目成功启动，说明构建成功了
-5.	以步骤3的方式，继续创建其他模块persistence模块、model模块
+
+5.	以步骤3的方式，继续创建其他模块persistence模块、model模块  
+
 6.	到此三个模块web模块、persistence模块、model模块就已经创建完成，它们的依赖关系是：web 依赖于persistence，persistence 依赖于model。三个模块创建完成后，会产生三个对应的pom.xml文件。然后根据模块依赖关系建立多模块关系，
+
 7.	在web.xml中添加如下依赖关系：
 ####<dependencies>
     <dependency>
@@ -25,6 +31,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </dependency>
 </dependencies>  
+
 9. 到此就完成了springboot多模块重构的搭建  
 
 #springboot项目打包
@@ -65,6 +72,7 @@
       </plugin>
    </plugins>
 </build>
+
 4.  然后再一次运行打包命令，命令：mvn -Dmaven.test.skip -U clean package，此时可能出现新的问题，它会尝试下载相关的jar包，会提示snapshot仓储中没有这个包的信息，解决办法执行另一个命令，命令：mvn -Dmaven.test.skip -U clean install，你会发现其实还是错误的，你崩溃没有？
 
 5.其实上面的方法本就是错误的操作方法，在多模块下，我们的启动类是在Web模块下，因此我们要将根项目中pom.xml文件的如下信息，剪切到Web模块下的pom.xml文件中，如下：
@@ -78,7 +86,8 @@
             </configuration>
         </plugin>
     </plugins>
-</build>
+</build>   
+
 6.  然后执行打包命令，命令：mvn -Dmaven.test.skip -U clean package， 打包之后，生成的jar包就会位于web模块下的target目录中   
 
 7.打包成功之后，可以执行命令：java -jar 项目jar包.jar   启动项目
