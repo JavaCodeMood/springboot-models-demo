@@ -15,7 +15,7 @@
 6.	到此三个模块web模块、persistence模块、model模块就已经创建完成，它们的依赖关系是：web 依赖于persistence，persistence 依赖于model。三个模块创建完成后，会产生三个对应的pom.xml文件。然后根据模块依赖关系建立多模块关系，
 
 7.	在web.xml中添加如下依赖关系：
-####<dependencies>
+<dependencies>
     <dependency>
         <groupId>com.lhf</groupId>
         <artifactId>persistence</artifactId>
@@ -24,7 +24,7 @@
 </dependencies>
 
 8.在persistence.xml中添加如下依赖：
-#####<dependencies>
+<dependencies>
     <dependency>
         <groupId>com.lhf</groupId>
         <artifactId>model</artifactId>
@@ -40,8 +40,8 @@
 
 2.  执行命令打包，命令：mvn -Dmaven.test.skip -U clean package
 此时可能打包失败，原因是：缺少spring-boot-maven-plugin插件，没有找到入口类Main class，解决办法：进入根项目的pom.xml文件中，添加如下信息： 
-####<build>  
-####   <plugins>  
+<build>
+   <plugins>
       <plugin>  
          <groupId>org.springframework.boot</groupId>  
          <artifactId>spring-boot-maven-plugin</artifactId>  
@@ -54,8 +54,8 @@
 
 3.然后再次执行命令：mvn -Dmaven.test.skip -U clean package
 此时可能还会报错，找不到相关的类，解决办法，再次修改根项目的pom.xml文件，添加相关的依赖信息，如下：
-#####<build>
-#####   <plugins>
+<build>
+   <plugins>
       <plugin>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-maven-plugin</artifactId>
@@ -76,7 +76,7 @@
 4.  然后再一次运行打包命令，命令：mvn -Dmaven.test.skip -U clean package，此时可能出现新的问题，它会尝试下载相关的jar包，会提示snapshot仓储中没有这个包的信息，解决办法执行另一个命令，命令：mvn -Dmaven.test.skip -U clean install，你会发现其实还是错误的，你崩溃没有？
 
 5.其实上面的方法本就是错误的操作方法，在多模块下，我们的启动类是在Web模块下，因此我们要将根项目中pom.xml文件的如下信息，剪切到Web模块下的pom.xml文件中，如下：
-#####<build>
+<build>
     <plugins>
         <plugin>
             <groupId>org.springframework.boot</groupId>
@@ -102,7 +102,7 @@
 
 ###使用maven命令启动项目
 cmd命令进入项目的目录，执行命令：mvn spring-boot:run  启动项目，此时会提醒你没有找到Main class，解决办法，切换到Web模块下，并在pom.xml文件中，添加如下信息：
-####<build>
+<build>
     <plugins>
         <plugin>
             <groupId>org.springframework.boot</groupId>
